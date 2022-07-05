@@ -1,25 +1,37 @@
-package com.example.demo;
+package com.example.service;
 
 import com.example.utils.hangulparser.HangulParser;
 import com.example.utils.hangulparser.HangulParserException;
-import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.StringUtils;
+import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-class Demo1ApplicationTests {
+@Data
+public class NameService {
 
+    Set<String> exceptionDictionary = new HashSet<>();
+    Set<String> customExceptionDictionary = new HashSet<>();
+    Set<String> lastCharterOfFirstNameExceptionDictionary = new HashSet<>();
+    Set<String> middleCharterOfFirstNameExceptionDictionary = new HashSet<>();
 
-    @Test
-    void contextLoads() {
+    List<String> moeumAllowList = new ArrayList<>();
+    List<String> jaeumAllowList = new ArrayList<>();
+
+    List<String> lastCharacterFilterList = new ArrayList<>();
+    String lastName = "김";
+
+    public List<String> getName() {
 
         setInit();
 
         List<String> secondTempList = new ArrayList<>();
         jaeumAllowList.forEach(jaeum -> {
             moeumAllowList.forEach(moeum ->{
-            List<String> tempList = new ArrayList<>();
+                List<String> tempList = new ArrayList<>();
                 tempList.add(jaeum);
                 tempList.add(moeum);
                 try {
@@ -47,6 +59,7 @@ class Demo1ApplicationTests {
         }
 
         printTotalNameCount(resulFirstNameList);
+        return resulFirstNameList;
     }
 
     private void print(Object s){
@@ -74,11 +87,16 @@ class Demo1ApplicationTests {
         customExceptionDictionary.add("가");
         customExceptionDictionary.add("두");
         customExceptionDictionary.add("허");
+        customExceptionDictionary.add("셰");
         customExceptionDictionary.add("기");
         customExceptionDictionary.add("도");
+        customExceptionDictionary.add("해");
         customExceptionDictionary.add("바");
         customExceptionDictionary.add("호");
         customExceptionDictionary.add("구");
+        customExceptionDictionary.add("모");
+        customExceptionDictionary.add("오");
+//        customExceptionDictionary.add("마");
     }
     private void setExceptionDictionary() {
         exceptionDictionary.add("메");
@@ -124,7 +142,6 @@ class Demo1ApplicationTests {
         exceptionDictionary.add("대");
         exceptionDictionary.add("더");
         exceptionDictionary.add("됴");
-        exceptionDictionary.add("마");
         exceptionDictionary.add("르");
         exceptionDictionary.add("로");
         exceptionDictionary.add("내");
@@ -284,5 +301,4 @@ class Demo1ApplicationTests {
                 || checkBanCharacter(firstName)
                 || isEqualsWithEveryCharacter(firstName);
     }
-
 }
